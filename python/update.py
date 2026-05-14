@@ -13,10 +13,18 @@ TOP_STOCKS = 10
 # =========================
 # GET NIFTY LARGEMIDCAP 250
 # =========================
+import requests
+from io import StringIO
 
 csv_url = "https://www.niftyindices.com/IndexConstituent/ind_niftylargemidcap250list.csv"
 
-stocks_df = pd.read_csv(csv_url)
+headers = {
+    "User-Agent": "Mozilla/5.0"
+}
+
+response = requests.get(csv_url, headers=headers)
+csv_data = StringIO(response.text)
+stocks_df = pd.read_csv(csv_data)
 
 # NSE symbols for yfinance
 symbols = stocks_df['Symbol'].tolist()
