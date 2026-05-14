@@ -16,39 +16,56 @@ TOP_STOCKS = 10
 # =========================
 
 import requests
-from io import StringIO
 
-csv_url = "https://nsearchives.nseindia.com/content/fo/fo_mktlots.csv"
+session = requests.Session()
 
 headers = {
-    "User-Agent": "Mozilla/5.0"
+    "User-Agent": "Mozilla/5.0",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Referer": "https://www.nseindia.com/",
 }
 
-response = requests.get(csv_url, headers=headers)
+# First visit NSE homepage
+session.get(
+    "https://www.nseindia.com",
+    headers=headers
+)
 
-csv_data = StringIO(response.text)
+# NSE API
+url = (
+    "https://www.nseindia.com/api/"
+    "underlying-information"
+)
 
-# Read CSV without fixed header
-stocks_df = pd.read_csv(csv_data, header=None)
+response = session.get(
+    url,
+    headers=headers
+)
 
-# Get symbols from column B starting row 8
-symbols = stocks_df.iloc[7:, 1].dropna().tolist()
+data = response.json()
 
-# Remove indices
-indices_to_remove = [
-    'NIFTY',
-    'MIDCPNIFTY',
-    'NIFTYNXT50',
-    'BANKNIFTY',
-    'FINNIFTY'
-]
+symbols = []
 
-symbols = [s for s in symbols if s not in indices_to_remove]
+for item in data['data']:
 
-# Add .NS suffix
-symbols = [symbol + '.NS' for symbol in symbols]
+    symbol = item['symbol']
 
-print(symbols[:10])
+    # Remove indices
+    if symbol in [
+        'NIFTY',
+        'BANKNIFTY',
+        'FINNIFTY',
+        'MIDCPNIFTY',
+        'NIFTYNXT50'
+    ]:
+        continue
+
+    symbols.append(symbol + '.NS')
+
+print(symbols[:20])
+
+print(f'Total F&O Stocks: {len(symbols)}')
 
 results = []
 
