@@ -27,8 +27,11 @@ response = requests.get(csv_url, headers=headers)
 csv_data = StringIO(response.text)
 stocks_df = pd.read_csv(csv_data)
 
-# NSE symbols for yfinance
-symbols = stocks_df['Symbol'].tolist()
+stocks_df.columns = stocks_df.columns.str.strip()
+print(stocks_df.columns)
+
+symbol_column = [col for col in stocks_df.columns if 'Symbol' in col][0]
+symbols = stocks_df[symbol_column].tolist()
 
 # Add .NS suffix
 symbols = [symbol + '.NS' for symbol in symbols]
