@@ -46,10 +46,12 @@ print(f"Total Stocks: {len(symbols)}")
 # =========================
 # CALCULATE RETURNS
 # =========================
-
 for symbol in symbols:
+
     time.sleep(1)
+
     try:
+
         print(f"Processing: {symbol}")
 
         data = yf.download(
@@ -63,19 +65,32 @@ for symbol in symbols:
             continue
 
         close_prices = data['Close'].squeeze()
-    
+
         if len(close_prices) < 252:
             continue
-        
+
         current_price = float(close_prices.iloc[-1])
-        
+
         price_3m = float(close_prices.iloc[-63])
+
         price_6m = float(close_prices.iloc[-126])
+
         price_12m = float(close_prices.iloc[-252])
 
-        return_3m = ((current_price - price_3m) / price_3m) * 100
-        return_6m = ((current_price - price_6m) / price_6m) * 100
-        return_12m = ((current_price - price_12m) / price_12m) * 100
+        return_3m = (
+            (current_price - price_3m)
+            / price_3m
+        ) * 100
+
+        return_6m = (
+            (current_price - price_6m)
+            / price_6m
+        ) * 100
+
+        return_12m = (
+            (current_price - price_12m)
+            / price_12m
+        ) * 100
 
         momentum_score = (
             (return_12m * 0.50) +
@@ -85,14 +100,15 @@ for symbol in symbols:
 
         results.append({
             'symbol': symbol.replace('.NS', ''),
-            'currentPrice': round(float(current_price), 2),
-            'return3M': round(float(return_3m), 2),
-            'return6M': round(float(return_6m), 2),
-            'return12M': round(float(return_12m), 2),
-            'momentumScore': round(float(momentum_score), 2)
+            'currentPrice': round(current_price, 2),
+            'return3M': round(return_3m, 2),
+            'return6M': round(return_6m, 2),
+            'return12M': round(return_12m, 2),
+            'momentumScore': round(momentum_score, 2)
         })
 
     except Exception as e:
+
         print(f"Error in {symbol}: {e}")
 
 # =========================
@@ -103,11 +119,10 @@ momentum_df = pd.DataFrame(results)
 
 print(momentum_df.head())
 
-if momentum_df.empty:
-    raise Exception("Momentum dataframe is empty")
+print(f"Total valid stocks: {len(momentum_df)}")
 
-if 'momentumScore' not in momentum_df.columns:
-    raise Exception("momentumScore column missing")
+if momentum_df.empty:
+    raise Exception("No valid momentum data generated")
 
 momentum_df = momentum_df.sort_values(
     by='momentumScore',
