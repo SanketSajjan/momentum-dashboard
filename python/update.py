@@ -1,0 +1,130 @@
+import pandas as pd
+import yfinance as yf
+import json
+from datetime import datetime
+
+# =========================
+# SETTINGS
+# =========================
+
+INITIAL_CAPITAL = 500000
+TOP_STOCKS = 10
+
+# =========================
+# GET NIFTY LARGEMIDCAP 250
+# =========================
+
+csv_url = "https://www.niftyindices.com/IndexConstituent/ind_niftylargemidcap250list.csv"
+
+stocks_df = pd.read_csv(csv_url)
+
+# NSE symbols for yfinance
+symbols = stocks_df['Symbol'].tolist()
+
+# Add .NS suffix
+symbols = [symbol + '.NS' for symbol in symbols]
+
+results = []
+
+print(f"Total Stocks: {len(symbols)}")
+
+# =========================
+# CALCULATE RETURNS
+# =========================
+
+for symbol in symbols:
+    try:
+        print(f"Processing: {symbol}")
+
+        data = yf.download(
+            symbol,
+            period='1y',
+            progress=False,
+            auto_adjust=True
+        )
+
+        if len(data) < 250:
+            continue
+
+        current_price = data['Close'].iloc[-1]
+
+        price_3m = data['Close'].iloc[-63]
+        price_6m = data['Close'].iloc[-126]
+        price_12m = data['Close'].iloc[0]
+
+        return_3m = ((current_price - price_3m) / price_3m) * 100
+        return_6m = ((current_price - price_6m) / price_6m) * 100
+        return_12m = ((current_price - price_12m) / price_12m) * 100
+
+        momentum_score = (
+            (return_12m * 0.50) +
+            (return_6m * 0.30) +
+            (return_3m * 0.20)
+        )
+
+        results.append({
+            'symbol': symbol.replace('.NS', ''),
+            'currentPrice': round(float(current_price), 2),
+            'return3M': round(float(return_3m), 2),
+            'return6M': round(float(return_6m), 2),
+            'return12M': round(float(return_12m), 2),
+            'momentumScore': round(float(momentum_score), 2)
+        })
+
+    except Exception as e:
+        print(f"Error in {symbol}: {e}")
+
+# =========================
+# CREATE DATAFRAME
+# =========================
+
+momentum_df = pd.DataFrame(results)
+
+momentum_df = momentum_df.sort_values(
+    by='momentumScore',
+    ascending=False
+)
+
+# Top 20 stocks
+
+top20_df = momentum_df.head(20)
+
+# =========================
+# TOP 10 PORTFOLIO
+# =========================
+
+portfolio_df = momentum_df.head(TOP_STOCKS).copy()
+
+allocation_per_stock = INITIAL_CAPITAL / TOP_STOCKS
+
+portfolio_data = []
+
+for _, row in portfolio_df.iterrows():
+
+    qty = int(allocation_per_stock / row['currentPrice'])
+
+    invested_amount = qty * row['currentPrice']
+
+    portfolio_data.append({
+        'symbol': row['symbol'],
+        'price': row['currentPrice'],
+        'quantity': qty,
+        'investedAmount': round(invested_amount, 2),
+        'momentumScore': row['momentumScore']
+    })
+
+# =========================
+# OUTPUT JSON
+# =========================
+
+output = {
+    'lastUpdated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+    'top20': top20_df.to_dict(orient='records'),
+    'portfolio': portfolio_data,
+    'capital': INITIAL_CAPITAL
+}
+
+with open('data/output.json', 'w') as f:
+    json.dump(output, f, indent=4)
+
+print('output.json updated successfully')
