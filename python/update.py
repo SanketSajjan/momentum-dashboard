@@ -131,7 +131,10 @@ momentum_df = momentum_df.sort_values(
 
 # Top 20 stocks
 
-top20_df = momentum_df.head(20)
+top20_df = momentum_df.sort_values(
+    by='momentumScore',
+    ascending=False
+).head(20)
 
 # =========================
 # TOP 10 PORTFOLIO
