@@ -95,8 +95,16 @@ for symbol in symbols:
 # =========================
 # CREATE DATAFRAME
 # =========================
-
+print(results[:5])
 momentum_df = pd.DataFrame(results)
+
+print(momentum_df.head())
+
+if momentum_df.empty:
+    raise Exception("Momentum dataframe is empty")
+
+if 'momentumScore' not in momentum_df.columns:
+    raise Exception("momentumScore column missing")
 
 momentum_df = momentum_df.sort_values(
     by='momentumScore',
