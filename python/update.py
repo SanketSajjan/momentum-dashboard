@@ -12,32 +12,43 @@ INITIAL_CAPITAL = 500000
 TOP_STOCKS = 10
 
 # =========================
-# GET NIFTY LARGEMIDCAP 250
+# GET F&O STOCKS
 # =========================
+
 import requests
 from io import StringIO
 
-csv_url = "https://www.niftyindices.com/IndexConstituent/ind_niftylargemidcap250list.csv"
+csv_url = "https://nsearchives.nseindia.com/content/fo/fo_mktlots.csv"
 
 headers = {
     "User-Agent": "Mozilla/5.0"
 }
 
 response = requests.get(csv_url, headers=headers)
+
 csv_data = StringIO(response.text)
-stocks_df = pd.read_csv(csv_data)
 
-stocks_df.columns = stocks_df.columns.str.strip()
-print(stocks_df.columns)
+# Read CSV without fixed header
+stocks_df = pd.read_csv(csv_data, header=None)
 
-symbol_column = [col for col in stocks_df.columns if 'Symbol' in col][0]
-symbols = stocks_df[symbol_column].tolist()
+# Get symbols from column B starting row 8
+symbols = stocks_df.iloc[7:, 1].dropna().tolist()
+
+# Remove indices
+indices_to_remove = [
+    'NIFTY',
+    'MIDCPNIFTY',
+    'NIFTYNXT50',
+    'BANKNIFTY',
+    'FINNIFTY'
+]
+
+symbols = [s for s in symbols if s not in indices_to_remove]
 
 # Add .NS suffix
 symbols = [symbol + '.NS' for symbol in symbols]
 
-# Remove dummy symbols
-symbols = [s for s in symbols if 'DUMMY' not in s]
+print(symbols[:10])
 
 results = []
 
