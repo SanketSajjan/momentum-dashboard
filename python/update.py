@@ -2,6 +2,7 @@ import pandas as pd
 import yfinance as yf
 import json
 from datetime import datetime
+import time
 
 # =========================
 # SETTINGS
@@ -32,6 +33,9 @@ symbols = stocks_df['Symbol'].tolist()
 # Add .NS suffix
 symbols = [symbol + '.NS' for symbol in symbols]
 
+# Remove dummy symbols
+symbols = [s for s in symbols if 'DUMMY' not in s]
+
 results = []
 
 print(f"Total Stocks: {len(symbols)}")
@@ -41,6 +45,7 @@ print(f"Total Stocks: {len(symbols)}")
 # =========================
 
 for symbol in symbols:
+    time.sleep(1)
     try:
         print(f"Processing: {symbol}")
 
@@ -51,14 +56,19 @@ for symbol in symbols:
             auto_adjust=True
         )
 
+        if data.empty:
+            continue
+    
         if len(data) < 250:
             continue
 
-        current_price = data['Close'].iloc[-1]
-
-        price_3m = data['Close'].iloc[-63]
-        price_6m = data['Close'].iloc[-126]
-        price_12m = data['Close'].iloc[0]
+        close_prices = data['Close']
+        
+        current_price = float(close_prices.iloc[-1])
+        
+        price_3m = float(close_prices.iloc[-63])
+        price_6m = float(close_prices.iloc[-126])
+        price_12m = float(close_prices.iloc[0])
 
         return_3m = ((current_price - price_3m) / price_3m) * 100
         return_6m = ((current_price - price_6m) / price_6m) * 100
