@@ -23,6 +23,7 @@ jobs:
         run: |
           pip install pandas
           pip install yfinance
+          pip install requests
 
       - name: Run Momentum Script
         run: python python/update.py
