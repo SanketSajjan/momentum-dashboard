@@ -58,17 +58,17 @@ for symbol in symbols:
 
         if data.empty:
             continue
-    
-        if len(data) < 250:
-            continue
 
-        close_prices = data['Close']
+        close_prices = data['Close'].squeeze()
+    
+        if len(close_prices) < 252:
+            continue
         
         current_price = float(close_prices.iloc[-1])
         
         price_3m = float(close_prices.iloc[-63])
         price_6m = float(close_prices.iloc[-126])
-        price_12m = float(close_prices.iloc[0])
+        price_12m = float(close_prices.iloc[-252])
 
         return_3m = ((current_price - price_3m) / price_3m) * 100
         return_6m = ((current_price - price_6m) / price_6m) * 100
