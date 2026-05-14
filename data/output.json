@@ -1,1 +1,238 @@
-{}
+{
+    "lastUpdated": "2026-05-14 13:37:22",
+    "top20": [
+        {
+            "symbol": "MCX",
+            "currentPrice": 3339.1,
+            "return3M": 35.15,
+            "return6M": 75.83,
+            "return12M": 170.2,
+            "momentumScore": 114.88
+        },
+        {
+            "symbol": "NATIONALUM",
+            "currentPrice": 416.45,
+            "return3M": 13.53,
+            "return6M": 61.92,
+            "return12M": 151.36,
+            "momentumScore": 96.96
+        },
+        {
+            "symbol": "GVT&D",
+            "currentPrice": 4337.8,
+            "return3M": 20.0,
+            "return6M": 38.95,
+            "return12M": 145.47,
+            "momentumScore": 88.42
+        },
+        {
+            "symbol": "ADANIPOWER",
+            "currentPrice": 224.49,
+            "return3M": 50.61,
+            "return6M": 48.5,
+            "return12M": 107.94,
+            "momentumScore": 78.64
+        },
+        {
+            "symbol": "LAURUSLABS",
+            "currentPrice": 1315.5,
+            "return3M": 36.27,
+            "return6M": 33.59,
+            "return12M": 117.49,
+            "momentumScore": 76.08
+        },
+        {
+            "symbol": "POWERINDIA",
+            "currentPrice": 32290.0,
+            "return3M": 43.79,
+            "return6M": 47.75,
+            "return12M": 93.0,
+            "momentumScore": 69.59
+        },
+        {
+            "symbol": "APARINDS",
+            "currentPrice": 12735.0,
+            "return3M": 34.5,
+            "return6M": 49.28,
+            "return12M": 84.92,
+            "momentumScore": 64.14
+        },
+        {
+            "symbol": "BHEL",
+            "currentPrice": 413.15,
+            "return3M": 49.64,
+            "return6M": 44.56,
+            "return12M": 72.97,
+            "momentumScore": 59.78
+        },
+        {
+            "symbol": "CUMMINSIND",
+            "currentPrice": 5367.0,
+            "return3M": 22.02,
+            "return6M": 22.14,
+            "return12M": 89.49,
+            "momentumScore": 55.79
+        },
+        {
+            "symbol": "BSE",
+            "currentPrice": 4037.6,
+            "return3M": 27.2,
+            "return6M": 52.7,
+            "return12M": 64.87,
+            "momentumScore": 53.68
+        },
+        {
+            "symbol": "NLCINDIA",
+            "currentPrice": 370.9,
+            "return3M": 43.56,
+            "return6M": 43.14,
+            "return12M": 63.84,
+            "momentumScore": 53.58
+        },
+        {
+            "symbol": "IDEA",
+            "currentPrice": 12.97,
+            "return3M": 12.98,
+            "return6M": 26.66,
+            "return12M": 85.82,
+            "momentumScore": 53.5
+        },
+        {
+            "symbol": "HINDALCO",
+            "currentPrice": 1103.3,
+            "return3M": 13.87,
+            "return6M": 39.0,
+            "return12M": 70.84,
+            "momentumScore": 49.89
+        },
+        {
+            "symbol": "SAIL",
+            "currentPrice": 199.08,
+            "return3M": 23.66,
+            "return6M": 37.87,
+            "return12M": 64.31,
+            "momentumScore": 48.25
+        },
+        {
+            "symbol": "BHARATFORG",
+            "currentPrice": 1948.9,
+            "return3M": 20.89,
+            "return6M": 46.88,
+            "return12M": 57.29,
+            "momentumScore": 46.89
+        },
+        {
+            "symbol": "MAHABANK",
+            "currentPrice": 78.5,
+            "return3M": 17.09,
+            "return6M": 39.59,
+            "return12M": 57.78,
+            "momentumScore": 44.19
+        },
+        {
+            "symbol": "GLENMARK",
+            "currentPrice": 2340.6,
+            "return3M": 19.54,
+            "return6M": 28.8,
+            "return12M": 62.61,
+            "momentumScore": 43.85
+        },
+        {
+            "symbol": "HINDZINC",
+            "currentPrice": 669.25,
+            "return3M": 10.33,
+            "return6M": 39.79,
+            "return12M": 58.34,
+            "momentumScore": 43.17
+        },
+        {
+            "symbol": "THERMAX",
+            "currentPrice": 4597.7,
+            "return3M": 55.32,
+            "return6M": 46.49,
+            "return12M": 35.57,
+            "momentumScore": 42.79
+        },
+        {
+            "symbol": "ADANIGREEN",
+            "currentPrice": 1414.9,
+            "return3M": 44.63,
+            "return6M": 35.5,
+            "return12M": 46.28,
+            "momentumScore": 42.72
+        }
+    ],
+    "portfolio": [
+        {
+            "symbol": "MCX",
+            "price": 3339.1,
+            "quantity": 14,
+            "investedAmount": 46747.4,
+            "momentumScore": 114.88
+        },
+        {
+            "symbol": "NATIONALUM",
+            "price": 416.45,
+            "quantity": 120,
+            "investedAmount": 49974.0,
+            "momentumScore": 96.96
+        },
+        {
+            "symbol": "GVT&D",
+            "price": 4337.8,
+            "quantity": 11,
+            "investedAmount": 47715.8,
+            "momentumScore": 88.42
+        },
+        {
+            "symbol": "ADANIPOWER",
+            "price": 224.49,
+            "quantity": 222,
+            "investedAmount": 49836.78,
+            "momentumScore": 78.64
+        },
+        {
+            "symbol": "LAURUSLABS",
+            "price": 1315.5,
+            "quantity": 38,
+            "investedAmount": 49989.0,
+            "momentumScore": 76.08
+        },
+        {
+            "symbol": "POWERINDIA",
+            "price": 32290.0,
+            "quantity": 1,
+            "investedAmount": 32290.0,
+            "momentumScore": 69.59
+        },
+        {
+            "symbol": "APARINDS",
+            "price": 12735.0,
+            "quantity": 3,
+            "investedAmount": 38205.0,
+            "momentumScore": 64.14
+        },
+        {
+            "symbol": "BHEL",
+            "price": 413.15,
+            "quantity": 121,
+            "investedAmount": 49991.15,
+            "momentumScore": 59.78
+        },
+        {
+            "symbol": "CUMMINSIND",
+            "price": 5367.0,
+            "quantity": 9,
+            "investedAmount": 48303.0,
+            "momentumScore": 55.79
+        },
+        {
+            "symbol": "BSE",
+            "price": 4037.6,
+            "quantity": 12,
+            "investedAmount": 48451.2,
+            "momentumScore": 53.68
+        }
+    ],
+    "capital": 500000
+}
