@@ -6,14 +6,14 @@
         "factors": {
             "supertrend": false,
             "peFilter": true,
-            "vixBelow25": true,
+            "vixBelow25": false,
             "vixSpikeSafe": true
         },
         "marketData": {
             "niftyClose": 23643.5,
             "supertrend": 24868.9515737173,
             "niftyPE": 20.6,
-            "indiaVIX": 18.790000915527344,
+            "indiaVIX": 28.790000915527344,
             "vixChange4Week": 9.180720018051653
         }
     },
