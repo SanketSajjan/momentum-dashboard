@@ -1,20 +1,20 @@
 {
-    "lastUpdated": "2026-05-15 13:55:05",
+    "lastUpdated": "2026-05-15 16:18:27",
     "regime": {
-        "score": 1,
-        "regime": "HALF",
+        "score": 3,
+        "regime": "FULL",
         "factors": {
             "supertrend": false,
-            "peFilter": false,
-            "vixBelow25": false,
+            "peFilter": true,
+            "vixBelow25": true,
             "vixSpikeSafe": true
         },
         "marketData": {
             "niftyClose": 23643.5,
             "supertrend": 24868.9515737173,
-            "niftyPE": 28.6,
-            "indiaVIX": 30.000000915527344,
-            "vixChange4Week": 15.180720018051653
+            "niftyPE": 20.6,
+            "indiaVIX": 18.790000915527344,
+            "vixChange4Week": 9.180720018051653
         }
     },
     "top20Symbols": [
@@ -41,12 +41,12 @@
     ],
     "assetAllocation": {
         "stocks": {
-            "percentage": 40,
-            "capital": 200000.0
+            "percentage": 80,
+            "capital": 400000.0
         },
         "gold": {
-            "percentage": 30,
-            "capital": 150000.0,
+            "percentage": 20,
+            "capital": 100000.0,
             "allocation": {
                 "symbol": "TATAGOLD",
                 "price": 15.18,
@@ -55,15 +55,10 @@
             }
         },
         "debt": {
-            "percentage": 30,
-            "capital": 150000.0,
-            "allocation": {
-                "symbol": "LIQUIDCASE",
-                "price": 113.18,
-                "quantity": 1325,
-                "investedAmount": 149963.50
-            }
-        },
+            "percentage": 0,
+            "capital": 0.0,
+            "allocation": null
+        }
     },
     "top20": [
         {
