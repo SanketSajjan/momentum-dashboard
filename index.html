@@ -441,7 +441,7 @@
 
       badge.innerText = `${data.regime.regime} REGIME`;
 
-      if(data.regime.regime === 'FULL') {
+      if(data.regime.score >= 3) {
         badge.className = 'badge full';
       }
       else {
@@ -492,12 +492,27 @@
         ? `✅ 1 - IN 4W ${data.regime.marketData.vixChange4Week.toFixed(0)}%`
         : `❌ 0 - IN 4W ${data.regime.marketData.vixChange4Week.toFixed(0)}%`;
 
-      const regimeLabel = data.regime.regime === 'FULL'
-        ? 'AGGRESSIVE'
-        : 'DEFENSIVE';
+      let regimeLabel = '';
+      let regimeColor = '';
+
+      if(data.regime.score >= 3) {
+
+        regimeLabel = 'AGGRESSIVE';
+        regimeColor = '#16a34a';
+
+      }
+      else {
+
+        regimeLabel = 'DEFENSIVE';
+        regimeColor = '#f59e0b';
+
+      }
 
       document.getElementById('scoreRegimeBox').innerHTML =
         `${data.regime.score}/4 - ${regimeLabel}`;
+
+      document.getElementById('scoreRegimeBox').style.color =
+        regimeColor;
 
       // ======================================
       // TOP 20 TABLE
