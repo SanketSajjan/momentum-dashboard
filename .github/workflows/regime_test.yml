@@ -1,4 +1,6 @@
 name: Regime Test
+permissions:
+  contents: write
 
 on:
   workflow_dispatch:
@@ -30,3 +32,14 @@ jobs:
       
       - name: Run Regime Test
         run: python python/regime_test.py
+
+      - name: Commit JSON
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add data/regime_test.json
+
+          git commit -m "Update regime test JSON" || echo "No changes"
+
+          git push
