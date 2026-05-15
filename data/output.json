@@ -1,20 +1,20 @@
 {
     "lastUpdated": "2026-05-15 13:55:05",
     "regime": {
-        "score": 2,
+        "score": 1,
         "regime": "HALF",
         "factors": {
             "supertrend": false,
-            "peFilter": true,
+            "peFilter": false,
             "vixBelow25": false,
             "vixSpikeSafe": true
         },
         "marketData": {
             "niftyClose": 23643.5,
             "supertrend": 24868.9515737173,
-            "niftyPE": 20.6,
-            "indiaVIX": 28.790000915527344,
-            "vixChange4Week": 19.180720018051653
+            "niftyPE": 28.6,
+            "indiaVIX": 30.000000915527344,
+            "vixChange4Week": 15.180720018051653
         }
     },
     "top20Symbols": [
