@@ -1,1 +1,17 @@
-{}
+{
+    "score": 3,
+    "regime": "FULL",
+    "factors": {
+        "supertrend": false,
+        "peFilter": true,
+        "vixBelow25": true,
+        "vixSpikeSafe": true
+    },
+    "marketData": {
+        "niftyClose": 23720.05078125,
+        "supertrend": 24868.9515737173,
+        "niftyPE": 20.6,
+        "indiaVIX": 18.582500457763672,
+        "vixChange4Week": 7.975022930299426
+    }
+}
