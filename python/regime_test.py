@@ -1,3 +1,7 @@
+import requests
+import pandas as pd
+import yfinance as yf
+from bs4 import BeautifulSoup
 
 # ============================================
 # 🔹 REGIME ENGINE TEST
