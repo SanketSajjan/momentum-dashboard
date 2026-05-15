@@ -157,38 +157,37 @@ print(f"F2 PE Filter : {f2}")
 # INDIA VIX
 # --------------------------------------------
 
-try:
+vix_data = yf.download(
+    "^INDIAVIX",
+    period="6mo",
+    interval="1wk",
+    progress=False,
+    auto_adjust=True
+)
 
-    vix_data = yf.download(
-        "^INDIAVIX",
-        period="2mo",
-        progress=False,
-        auto_adjust=True
+if isinstance(
+    vix_data.columns,
+    pd.MultiIndex
+):
+    vix_data.columns = (
+        vix_data.columns.get_level_values(0)
     )
 
-    if isinstance(vix_data.columns, pd.MultiIndex):
-        vix_data.columns = (
-            vix_data.columns.get_level_values(0)
-        )
+vix_close = vix_data["Close"]
 
-    vix_close = vix_data["Close"]
+current_vix = float(
+    vix_close.iloc[-1]
+)
 
-    current_vix = float(vix_close.iloc[-1])
+# 4 weekly candles ago
+vix_4w = float(
+    vix_close.iloc[-5]
+)
 
-    vix_4w = float(vix_close.iloc[-21])
-
-    vix_change = (
-        (current_vix / vix_4w) - 1
-    ) * 100
-
-except Exception as e:
-
-    print("VIX ERROR")
-
-    print(e)
-
-    current_vix = 999
-    vix_change = 999
+vix_change = (
+    (current_vix - vix_4w)
+    / vix_4w
+) * 100
 
 print(f"Current VIX : {current_vix}")
 
