@@ -474,28 +474,59 @@
       // REGIME DETAILS
       // ======================================
 
+      const f1 = data.regime.factors.supertrend;
+      const f2 = data.regime.factors.peFilter;
+      const f3 = data.regime.factors.vixBelow25;
+      const f4 = data.regime.factors.vixSpikeSafe;
+
+      const score = data.regime.score;
+
+      // F1 SUPERTREND
+
       document.getElementById('supertrendStatus').innerHTML =
-        data.regime.factors.supertrend
-        ? '✅ 1 - BULLISH'
-        : '❌ 0 - BEARISH';
+        f1
+        ? `✅ 1 - BULLISH`
+        : `❌ 0 - BEARISH`;
+
+      document.getElementById('supertrendStatus').style.color =
+        f1 ? '#16a34a' : '#dc2626';
+
+      // F2 PE FILTER
 
       document.getElementById('niftyPEBox').innerHTML =
-        `✅ 1 - PE ${data.regime.marketData.niftyPE}`;
+        f2
+        ? `✅ 1 - PE ${data.regime.marketData.niftyPE}`
+        : `❌ 0 - PE ${data.regime.marketData.niftyPE}`;
+
+      document.getElementById('niftyPEBox').style.color =
+        f2 ? '#16a34a' : '#dc2626';
+
+      // F3 VIX LEVEL
 
       document.getElementById('vixLevelBox').innerHTML =
-        data.regime.factors.vixBelow25
+        f3
         ? `✅ 1 - VIX ${data.regime.marketData.indiaVIX.toFixed(1)}`
         : `❌ 0 - VIX ${data.regime.marketData.indiaVIX.toFixed(1)}`;
 
+      document.getElementById('vixLevelBox').style.color =
+        f3 ? '#16a34a' : '#dc2626';
+
+      // F4 VIX SPIKE
+
       document.getElementById('vixSpikeBox').innerHTML =
-        data.regime.factors.vixSpikeSafe
+        f4
         ? `✅ 1 - IN 4W ${data.regime.marketData.vixChange4Week.toFixed(0)}%`
         : `❌ 0 - IN 4W ${data.regime.marketData.vixChange4Week.toFixed(0)}%`;
+
+      document.getElementById('vixSpikeBox').style.color =
+        f4 ? '#16a34a' : '#dc2626';
+
+      // SCORE / REGIME
 
       let regimeLabel = '';
       let regimeColor = '';
 
-      if(data.regime.score >= 3) {
+      if(score >= 3) {
 
         regimeLabel = 'AGGRESSIVE';
         regimeColor = '#16a34a';
@@ -509,7 +540,7 @@
       }
 
       document.getElementById('scoreRegimeBox').innerHTML =
-        `${data.regime.score}/4 - ${regimeLabel}`;
+        `${score}/4 - ${regimeLabel}`;
 
       document.getElementById('scoreRegimeBox').style.color =
         regimeColor;
