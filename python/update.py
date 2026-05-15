@@ -238,9 +238,38 @@ portfolio_df = df.head(
     TOP_STOCKS
 ).copy()
 
-allocation_per_stock = (
-    INITIAL_CAPITAL / TOP_STOCKS
+# ============================================
+# ASSET ALLOCATION
+# ============================================
+
+stock_capital = (
+    INITIAL_CAPITAL
+    * req_stock
+    / 100
 )
+
+gold_capital = (
+    INITIAL_CAPITAL
+    * req_gold
+    / 100
+)
+
+debt_capital = (
+    INITIAL_CAPITAL
+    * req_debt
+    / 100
+)
+
+allocation_per_stock = (
+    stock_capital
+    / TOP_STOCKS
+)
+
+print(f"Stock Capital : {stock_capital}")
+
+print(f"Gold Capital : {gold_capital}")
+
+print(f"Debt Capital : {debt_capital}")
 
 portfolio = []
 
@@ -286,6 +315,98 @@ for _, row in portfolio_df.iterrows():
             2
         )
     })
+
+# ============================================
+# GOLD ETF
+# ============================================
+
+gold_data = yf.download(
+    "TATAGOLD.NS",
+    period="5d",
+    progress=False,
+    auto_adjust=True
+)
+
+gold_price = float(
+    gold_data["Close"]
+    .dropna()
+    .iloc[-1]
+)
+
+gold_qty = int(
+    gold_capital
+    / gold_price
+)
+
+gold_invested = (
+    gold_qty
+    * gold_price
+)
+
+gold_allocation = {
+
+    "symbol": "TATAGOLD",
+
+    "price": round(
+        gold_price,
+        2
+    ),
+
+    "quantity": gold_qty,
+
+    "investedAmount": round(
+        gold_invested,
+        2
+    )
+}
+
+# ============================================
+# DEBT ETF
+# ============================================
+
+debt_allocation = None
+
+if req_debt > 0:
+
+    debt_data = yf.download(
+        "LIQUIDCASE.NS",
+        period="5d",
+        progress=False,
+        auto_adjust=True
+    )
+
+    debt_price = float(
+        debt_data["Close"]
+        .dropna()
+        .iloc[-1]
+    )
+
+    debt_qty = int(
+        debt_capital
+        / debt_price
+    )
+
+    debt_invested = (
+        debt_qty
+        * debt_price
+    )
+
+    debt_allocation = {
+
+        "symbol": "LIQUIDCASE",
+
+        "price": round(
+            debt_price,
+            2
+        ),
+
+        "quantity": debt_qty,
+
+        "investedAmount": round(
+            debt_invested,
+            2
+        )
+    }
 
 # ============================================
 # FINAL OUTPUT
