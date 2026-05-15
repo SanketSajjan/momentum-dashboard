@@ -148,12 +148,12 @@ else:
 # ============================================
 
 r3 = (
-    price.pct_change(63).iloc[-1]
+    price.pct_change(62).iloc[-1]
     * 100
 )
 
 r6 = (
-    price.pct_change(126).iloc[-1]
+    price.pct_change(123).iloc[-1]
     * 100
 )
 
@@ -191,6 +191,18 @@ df["MomentumScore"] = (
     (df["3M"] * 0.20)
 
 )
+# ============================================
+# ROUND VALUES
+# ============================================
+
+df["12M"] = df["12M"].round(2)
+df["6M"] = df["6M"].round(2)
+df["3M"] = df["3M"].round(2)
+
+df["MomentumScore"] = (
+    df["MomentumScore"]
+    .round(2)
+)
 
 # ============================================
 # SORT
@@ -214,6 +226,9 @@ print(df.head())
 # ============================================
 
 top20 = df.head(20).copy()
+top20_symbols = top20[
+    "Symbol"
+].tolist()
 
 # ============================================
 # TOP 10 PORTFOLIO
