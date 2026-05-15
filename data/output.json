@@ -41,12 +41,12 @@
     ],
     "assetAllocation": {
         "stocks": {
-            "percentage": 80,
-            "capital": 400000.0
+            "percentage": 40,
+            "capital": 200000.0
         },
         "gold": {
-            "percentage": 20,
-            "capital": 100000.0,
+            "percentage": 30,
+            "capital": 150000.0,
             "allocation": {
                 "symbol": "TATAGOLD",
                 "price": 15.18,
@@ -55,10 +55,15 @@
             }
         },
         "debt": {
-            "percentage": 0,
-            "capital": 0.0,
-            "allocation": null
-        }
+            "percentage": 30,
+            "capital": 150000.0,
+            "allocation": {
+                "symbol": "LIQUIDCASE",
+                "price": 113.18,
+                "quantity": 1325,
+                "investedAmount": 149963.50
+            }
+        },
     },
     "top20": [
         {
