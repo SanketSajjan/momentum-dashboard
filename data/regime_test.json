@@ -8,10 +8,10 @@
         "vixSpikeSafe": true
     },
     "marketData": {
-        "niftyClose": 23720.05078125,
+        "niftyClose": 23643.5,
         "supertrend": 24868.9515737173,
         "niftyPE": 20.6,
-        "indiaVIX": 18.582500457763672,
-        "vixChange4Week": 7.975022930299426
+        "indiaVIX": 18.790000915527344,
+        "vixChange4Week": 9.180720018051653
     }
 }
