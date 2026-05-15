@@ -1,205 +1,320 @@
+import requests
 import pandas as pd
 import yfinance as yf
 import json
-from datetime import datetime
-import time
+from datetime import datetime, timedelta
+import warnings
 
-# =========================
+warnings.filterwarnings("ignore")
+
+# ============================================
 # SETTINGS
-# =========================
+# ============================================
 
 INITIAL_CAPITAL = 500000
 TOP_STOCKS = 10
 
-# =========================
-# GET F&O STOCKS
-# =========================
+# ============================================
+# LOAD REGIME DATA
+# ============================================
 
-import requests
+with open(
+    "data/regime_test.json",
+    "r"
+) as f:
 
-session = requests.Session()
+    regime_data = json.load(f)
 
-headers = {
-    "User-Agent": "Mozilla/5.0",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Referer": "https://www.nseindia.com/",
-}
+score = regime_data["score"]
 
-# First visit NSE homepage
-session.get(
-    "https://www.nseindia.com",
-    headers=headers
-)
+regime = regime_data["regime"]
 
-# NSE API
-url = (
-    "https://www.nseindia.com/api/"
-    "underlying-information"
-)
+if regime == "FULL":
 
-response = session.get(
-    url,
-    headers=headers
-)
+    req_stock = 80
+    req_gold = 20
+    req_debt = 0
 
-data = response.json()
+else:
 
-symbols = []
+    req_stock = 40
+    req_gold = 30
+    req_debt = 30
 
-for item in data['data']:
+print(f"Loaded Regime : {regime}")
 
-    symbol = item['symbol']
+# ============================================
+# FETCH FNO SYMBOLS
+# ============================================
 
-    # Remove indices
-    if symbol in [
-        'NIFTY',
-        'BANKNIFTY',
-        'FINNIFTY',
-        'MIDCPNIFTY',
-        'NIFTYNXT50'
-    ]:
-        continue
+def get_fno_symbols():
 
-    symbols.append(symbol + '.NS')
+    url = (
+        "https://www.nseindia.com/api/"
+        "equity-stockIndices?"
+        "index=SECURITIES%20IN%20F%26O"
+    )
 
-print(symbols[:20])
+    headers = {
+        "User-Agent": "Mozilla/5.0",
+        "Referer": "https://www.nseindia.com/"
+    }
 
-print(f'Total F&O Stocks: {len(symbols)}')
+    session = requests.Session()
 
-results = []
+    session.get(
+        "https://www.nseindia.com",
+        headers=headers
+    )
 
-print(f"Total Stocks: {len(symbols)}")
+    data = session.get(
+        url,
+        headers=headers
+    ).json()["data"]
 
-# =========================
-# CALCULATE RETURNS
-# =========================
-for symbol in symbols:
+    symbols = []
 
-    time.sleep(1)
+    for stock in data:
 
-    try:
+        symbol = stock["symbol"]
 
-        print(f"Processing: {symbol}")
-
-        data = yf.download(
-            symbol,
-            period='1y',
-            progress=False,
-            auto_adjust=True
-        )
-
-        if data.empty:
+        # Remove index symbols
+        if symbol in [
+            "NIFTY",
+            "BANKNIFTY",
+            "FINNIFTY",
+            "MIDCPNIFTY",
+            "NIFTYNXT50"
+        ]:
             continue
 
-        close_prices = data['Close'].squeeze()
+        symbols.append(symbol + ".NS")
 
-        if len(close_prices) < 130:
-            continue
+    return symbols
 
-        current_price = float(close_prices.iloc[-1])
+# ============================================
+# GET SYMBOLS
+# ============================================
 
-        price_3m = float(close_prices.iloc[-63])
+symbols = get_fno_symbols()
 
-        price_6m = float(close_prices.iloc[-126])
+print(f"Total F&O Stocks : {len(symbols)}")
 
-        price_12m = float(close_prices.iloc[0])
+# ============================================
+# DOWNLOAD DATA
+# ============================================
 
-        return_3m = (
-            (current_price - price_3m)
-            / price_3m
-        ) * 100
+end = datetime.today()
 
-        return_6m = (
-            (current_price - price_6m)
-            / price_6m
-        ) * 100
+start = end - timedelta(days=400)
 
-        return_12m = (
-            (current_price - price_12m)
-            / price_12m
-        ) * 100
-
-        momentum_score = (
-            (return_12m * 0.50) +
-            (return_6m * 0.30) +
-            (return_3m * 0.20)
-        )
-
-        results.append({
-            'symbol': symbol.replace('.NS', ''),
-            'currentPrice': round(current_price, 2),
-            'return3M': round(return_3m, 2),
-            'return6M': round(return_6m, 2),
-            'return12M': round(return_12m, 2),
-            'momentumScore': round(momentum_score, 2)
-        })
-
-    except Exception as e:
-
-        print(f"Error in {symbol}: {e}")
-
-# =========================
-# CREATE DATAFRAME
-# =========================
-print(results[:5])
-momentum_df = pd.DataFrame(results)
-
-print(momentum_df.head())
-
-print(f"Total valid stocks: {len(momentum_df)}")
-
-if momentum_df.empty:
-    raise Exception("No valid momentum data generated")
-
-momentum_df = momentum_df.sort_values(
-    by='momentumScore',
-    ascending=False
+data = yf.download(
+    symbols,
+    start=start,
+    end=end,
+    progress=False,
+    auto_adjust=True
 )
 
-# Top 20 stocks
+# ============================================
+# SAFE PRICE SELECTION
+# ============================================
 
-top20_df = momentum_df.sort_values(
-    by='momentumScore',
+if isinstance(
+    data.columns,
+    pd.MultiIndex
+):
+
+    if "Adj Close" in data.columns.levels[0]:
+
+        price = data["Adj Close"]
+
+    else:
+
+        price = data["Close"]
+
+else:
+
+    if "Adj Close" in data.columns:
+
+        price = data["Adj Close"]
+
+    else:
+
+        price = data["Close"]
+
+# ============================================
+# MOMENTUM CALCULATION
+# ============================================
+
+r3 = (
+    price.pct_change(63).iloc[-1]
+    * 100
+)
+
+r6 = (
+    price.pct_change(126).iloc[-1]
+    * 100
+)
+
+r12 = (
+    price.pct_change(252).iloc[-1]
+    * 100
+)
+
+df = pd.DataFrame({
+
+    "Symbol": r3.index.str.replace(
+        ".NS",
+        "",
+        regex=False
+    ),
+
+    "12M": r12.values,
+
+    "6M": r6.values,
+
+    "3M": r3.values
+
+}).dropna()
+
+# ============================================
+# MOMENTUM SCORE
+# ============================================
+
+df["MomentumScore"] = (
+
+    (df["12M"] * 0.50) +
+
+    (df["6M"] * 0.30) +
+
+    (df["3M"] * 0.20)
+
+)
+
+# ============================================
+# SORT
+# ============================================
+
+df = df.sort_values(
+    "MomentumScore",
     ascending=False
-).head(20)
+).reset_index(drop=True)
 
-# =========================
+df.insert(
+    0,
+    "Rank",
+    range(1, len(df) + 1)
+)
+
+print(df.head())
+
+# ============================================
+# TOP 20
+# ============================================
+
+top20 = df.head(20).copy()
+
+# ============================================
 # TOP 10 PORTFOLIO
-# =========================
+# ============================================
 
-portfolio_df = momentum_df.head(TOP_STOCKS).copy()
+portfolio_df = df.head(
+    TOP_STOCKS
+).copy()
 
-allocation_per_stock = INITIAL_CAPITAL / TOP_STOCKS
+allocation_per_stock = (
+    INITIAL_CAPITAL / TOP_STOCKS
+)
 
-portfolio_data = []
+portfolio = []
 
 for _, row in portfolio_df.iterrows():
 
-    qty = int(allocation_per_stock / row['currentPrice'])
+    symbol = row["Symbol"]
 
-    invested_amount = qty * row['currentPrice']
+    current_price = float(
 
-    portfolio_data.append({
-        'symbol': row['symbol'],
-        'price': row['currentPrice'],
-        'quantity': qty,
-        'investedAmount': round(invested_amount, 2),
-        'momentumScore': row['momentumScore']
+        price[symbol + ".NS"]
+        .dropna()
+        .iloc[-1]
+
+    )
+
+    qty = int(
+        allocation_per_stock
+        / current_price
+    )
+
+    invested_amount = (
+        qty * current_price
+    )
+
+    portfolio.append({
+
+        "symbol": symbol,
+
+        "price": round(
+            current_price,
+            2
+        ),
+
+        "quantity": qty,
+
+        "investedAmount": round(
+            invested_amount,
+            2
+        ),
+
+        "momentumScore": round(
+            row["MomentumScore"],
+            2
+        )
     })
 
-# =========================
-# OUTPUT JSON
-# =========================
+# ============================================
+# FINAL OUTPUT
+# ============================================
 
 output = {
-    'lastUpdated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-    'top20': top20_df.to_dict(orient='records'),
-    'portfolio': portfolio_data,
-    'capital': INITIAL_CAPITAL
+
+    "lastUpdated": datetime.now().strftime(
+        "%Y-%m-%d %H:%M:%S"
+    ),
+
+    "regime": regime_data,
+
+    "requiredAllocation": {
+
+        "stocks": req_stock,
+
+        "gold": req_gold,
+
+        "debt": req_debt
+    },
+
+    "top20": top20.to_dict(
+        orient="records"
+    ),
+
+    "portfolio": portfolio,
+
+    "capital": INITIAL_CAPITAL
 }
 
-with open('data/output.json', 'w') as f:
-    json.dump(output, f, indent=4)
+# ============================================
+# SAVE JSON
+# ============================================
 
-print('output.json updated successfully')
+with open(
+    "data/output.json",
+    "w"
+) as f:
+
+    json.dump(
+        output,
+        f,
+        indent=4
+    )
+
+print("output.json updated successfully")
