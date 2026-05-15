@@ -326,26 +326,33 @@
         <div class="regime-grid">
 
           <div class="regime-box">
-            <h4>Supertrend</h4>
+            <h4>F1: SUPERTREND</h4>
             <p id="supertrendStatus">FALSE</p>
           </div>
 
           <div class="regime-box">
-            <h4>Supertrend Value</h4>
-            <p id="supertrendValue">24868</p>
+            <h4>F2: NIFTY PE</h4>
+            <p id="niftyPEBox">20.6</p>
           </div>
 
           <div class="regime-box">
-            <h4>Nifty Close</h4>
-            <p id="niftyClose">23643</p>
+            <h4>F3: VIX LEVEL</h4>
+            <p id="vixLevelBox">18.4</p>
           </div>
 
           <div class="regime-box">
-            <h4>4W VIX Change</h4>
-            <p id="vixChange">7%</p>
+            <h4>F4: VIX SPIKE</h4>
+            <p id="vixSpikeBox">7%</p>
+          </div>
+
+          <div class="regime-box">
+            <h4>SCORE / REGIME</h4>
+            <p id="scoreRegimeBox">3/4 - AGGRESSIVE</p>
           </div>
 
         </div>
+
+      </div>
 
       </div>
 
@@ -380,6 +387,15 @@
       <h2 class="section-title">Recommended Portfolio</h2>
 
       <div id="portfolioGrid" class="portfolio-grid">
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top: 28px;">
+
+      <h2 class="section-title">Gold & Defensive Allocation</h2>
+
+      <div id="goldDebtGrid" class="portfolio-grid">
       </div>
 
     </div>
@@ -458,17 +474,30 @@
       // REGIME DETAILS
       // ======================================
 
-      document.getElementById('supertrendStatus').innerText =
-        data.regime.factors.supertrend ? 'TRUE' : 'FALSE';
+      document.getElementById('supertrendStatus').innerHTML =
+        data.regime.factors.supertrend
+        ? '✅ 1 - BULLISH'
+        : '❌ 0 - BEARISH';
 
-      document.getElementById('supertrendValue').innerText =
-        data.regime.marketData.supertrend.toFixed(2);
+      document.getElementById('niftyPEBox').innerHTML =
+        `✅ 1 - PE ${data.regime.marketData.niftyPE}`;
 
-      document.getElementById('niftyClose').innerText =
-        data.regime.marketData.niftyClose.toFixed(2);
+      document.getElementById('vixLevelBox').innerHTML =
+        data.regime.factors.vixBelow25
+        ? `✅ 1 - VIX ${data.regime.marketData.indiaVIX.toFixed(1)}`
+        : `❌ 0 - VIX ${data.regime.marketData.indiaVIX.toFixed(1)}`;
 
-      document.getElementById('vixChange').innerText =
-        `${data.regime.marketData.vixChange4Week.toFixed(2)}%`;
+      document.getElementById('vixSpikeBox').innerHTML =
+        data.regime.factors.vixSpikeSafe
+        ? `✅ 1 - IN 4W ${data.regime.marketData.vixChange4Week.toFixed(0)}%`
+        : `❌ 0 - IN 4W ${data.regime.marketData.vixChange4Week.toFixed(0)}%`;
+
+      const regimeLabel = data.regime.regime === 'FULL'
+        ? 'AGGRESSIVE'
+        : 'DEFENSIVE';
+
+      document.getElementById('scoreRegimeBox').innerHTML =
+        `${data.regime.score}/4 - ${regimeLabel}`;
 
       // ======================================
       // TOP 20 TABLE
@@ -499,6 +528,8 @@
 
       const portfolioGrid = document.getElementById('portfolioGrid');
 
+      portfolioGrid.innerHTML = '';
+
       data.portfolio.forEach(stock => {
 
         portfolioGrid.innerHTML += `
@@ -514,6 +545,50 @@
         `;
 
       });
+
+      // ======================================
+      // GOLD & DEBT
+      // ======================================
+
+      const goldDebtGrid = document.getElementById('goldDebtGrid');
+
+      goldDebtGrid.innerHTML = '';
+
+      const gold = data.assetAllocation.gold.allocation;
+
+      if(gold) {
+
+        goldDebtGrid.innerHTML += `
+
+          <div class="portfolio-item">
+            <h4>🟡 ${gold.symbol}</h4>
+            <p><strong>Asset:</strong> Gold ETF</p>
+            <p><strong>Price:</strong> ₹${gold.price}</p>
+            <p><strong>Quantity:</strong> ${gold.quantity}</p>
+            <p><strong>Invested:</strong> ₹${gold.investedAmount.toLocaleString()}</p>
+          </div>
+
+        `;
+
+      }
+
+      const debt = data.assetAllocation.debt.allocation;
+
+      if(debt) {
+
+        goldDebtGrid.innerHTML += `
+
+          <div class="portfolio-item">
+            <h4>🔵 ${debt.symbol}</h4>
+            <p><strong>Asset:</strong> Debt ETF</p>
+            <p><strong>Price:</strong> ₹${debt.price}</p>
+            <p><strong>Quantity:</strong> ${debt.quantity}</p>
+            <p><strong>Invested:</strong> ₹${debt.investedAmount.toLocaleString()}</p>
+          </div>
+
+        `;
+
+      }
 
       // ======================================
       // PIE CHART
