@@ -3,7 +3,8 @@ import pandas as pd
 import yfinance as yf
 from bs4 import BeautifulSoup
 from supertrend import calculate_supertrend
-
+from stock_indicators import indicators
+from stock_indicators.indicators.common.quote import Quote
 
 # ============================================
 # 🔹 REGIME ENGINE TEST
@@ -31,27 +32,51 @@ if isinstance(
         nifty.columns.get_level_values(0)
     )
 
-supertrend = calculate_supertrend(
-    nifty,
-    period=10,
+# Convert to Quote objects
+quotes = []
+
+for idx, row in nifty.iterrows():
+
+    quotes.append(
+        Quote(
+            date=idx,
+            open=float(row["Open"]),
+            high=float(row["High"]),
+            low=float(row["Low"]),
+            close=float(row["Close"]),
+            volume=0
+        )
+    )
+
+# TradingView-like Supertrend
+st = indicators.get_super_trend(
+    quotes,
+    lookback_periods=10,
     multiplier=3
 )
+
+# Latest valid result
+latest_st = None
+
+for x in reversed(st):
+
+    if x.super_trend is not None:
+
+        latest_st = float(x.super_trend)
+
+        break
 
 latest_close = float(
     nifty["Close"].iloc[-1]
 )
 
-latest_supertrend = float(
-    supertrend.iloc[-1]
-)
-
-f1 = latest_close > latest_supertrend
+f1 = latest_close > latest_st
 
 print(f"Latest Close : {latest_close}")
 
 print(
     f"Latest Supertrend : "
-    f"{latest_supertrend}"
+    f"{latest_st}"
 )
 
 print(f"F1 Supertrend : {f1}")
