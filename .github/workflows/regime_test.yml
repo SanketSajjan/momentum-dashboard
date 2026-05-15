@@ -25,7 +25,7 @@ jobs:
           pip install yfinance
           pip install requests
           pip install beautifulsoup4
-          pip install ta
+          pip install pandas_ta
       
       - name: Run Regime Test
         run: python python/regime_test.py
