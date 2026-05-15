@@ -254,7 +254,7 @@ regime_data = {
 
         "niftyClose": latest_close,
 
-        "supertrend": latest_supertrend,
+        "supertrend": latest_st,
 
         "niftyPE": nifty_pe,
 
