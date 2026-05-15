@@ -419,22 +419,50 @@ output = {
     ),
 
     "regime": regime_data,
+    "top20Symbols": top20_symbols,
+    "assetAllocation": {
 
-    "requiredAllocation": {
+        "stocks": {
 
-        "stocks": req_stock,
+            "percentage": req_stock,
 
-        "gold": req_gold,
+            "capital": round(
+                stock_capital,
+                2
+            )
+        },
 
-        "debt": req_debt
+        "gold": {
+
+            "percentage": req_gold,
+
+            "capital": round(
+                gold_capital,
+                2
+            ),
+
+            "allocation": gold_allocation
+        },
+
+        "debt": {
+
+            "percentage": req_debt,
+
+            "capital": round(
+                debt_capital,
+                2
+            ),
+
+            "allocation": debt_allocation
+        }
     },
+
 
     "top20": top20.to_dict(
         orient="records"
     ),
 
     "portfolio": portfolio,
-
     "capital": INITIAL_CAPITAL
 }
 
