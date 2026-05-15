@@ -1,45 +1,65 @@
 name: Daily Momentum Update
 
+permissions:
+  contents: write
+
 on:
+
   schedule:
     - cron: '30 12 * * *'
 
   workflow_dispatch:
 
 jobs:
+
   update-data:
+
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install Dependencies
         run: |
           pip install pandas
           pip install yfinance
           pip install requests
+          pip install beautifulsoup4
+          pip install stock-indicators
+
+      # =========================================
+      # RUN REGIME ENGINE FIRST
+      # =========================================
+
+      - name: Run Regime Test
+        run: python python/regime_test.py
+
+      # =========================================
+      # RUN MOMENTUM ENGINE
+      # =========================================
 
       - name: Run Momentum Script
         run: python python/update.py
 
-      - name: Install Dependencies
-        run: |
-          pip install pandas
-          pip install yfinance
-          pip install requests
-          pip install pandas_ta
-          pip install beautifulsoup4
-          
+      # =========================================
+      # COMMIT UPDATED JSON FILES
+      # =========================================
+
       - name: Commit JSON Updates
         run: |
           git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
-          git add .
+          git config --global user.email "github-actions@github.com"
+
+          git add data/output.json
+          git add data/regime_test.json
+
           git commit -m "Daily momentum update" || echo "No changes"
+
           git push
