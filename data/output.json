@@ -1,8 +1,8 @@
 {
     "lastUpdated": "2026-05-15 13:55:05",
     "regime": {
-        "score": 3,
-        "regime": "FULL",
+        "score": 2,
+        "regime": "HALF",
         "factors": {
             "supertrend": false,
             "peFilter": true,
