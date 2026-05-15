@@ -28,6 +28,14 @@ jobs:
       - name: Run Momentum Script
         run: python python/update.py
 
+      - name: Install Dependencies
+        run: |
+          pip install pandas
+          pip install yfinance
+          pip install requests
+          pip install pandas_ta
+          pip install beautifulsoup4
+          
       - name: Commit JSON Updates
         run: |
           git config --global user.name "github-actions"
