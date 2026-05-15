@@ -1,52 +1,554 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Momentum Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Momentum Portfolio Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f7fb;
+      color: #111827;
+      padding: 32px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .title h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .title p {
+      color: #6b7280;
+      font-size: 15px;
+    }
+
+    .badge {
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .full {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .half {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .card h3 {
+      font-size: 15px;
+      color: #6b7280;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .metric {
+      font-size: 34px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .sub {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .allocation-section {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .allocation-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .allocation-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 16px;
+    }
+
+    .allocation-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+    }
+
+    th {
+      text-align: left;
+      font-size: 13px;
+      color: #6b7280;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    td {
+      padding: 16px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+    }
+
+    .rank {
+      font-weight: 700;
+      color: #2563eb;
+    }
+
+    .score {
+      font-weight: 700;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .portfolio-item {
+      background: #f8fafc;
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .portfolio-item h4 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .portfolio-item p {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      margin-bottom: 20px;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .regime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .regime-box {
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 16px;
+    }
+
+    .regime-box h4 {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 10px;
+    }
+
+    .regime-box p {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    @media(max-width: 900px) {
+
+      body {
+        padding: 18px;
+      }
+
+      .allocation-section {
+        grid-template-columns: 1fr;
+      }
+
+      .title h1 {
+        font-size: 28px;
+      }
+
+    }
+
+  </style>
 </head>
 <body>
 
   <div class="container">
 
-    <h1>Nifty LargeMidcap 250 Momentum Dashboard</h1>
+    <div class="header">
 
-    <p id="updateTime"></p>
+      <div class="title">
+        <h1>Momentum Portfolio Dashboard</h1>
+        <p id="updatedTime">Loading latest update...</p>
+      </div>
 
-    <h2>Top 20 Momentum Stocks</h2>
+      <div id="regimeBadge" class="badge full">
+        FULL REGIME
+      </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Stock</th>
-          <th>3M Return</th>
-          <th>6M Return</th>
-          <th>12M Return</th>
-          <th>Momentum Score</th>
-        </tr>
-      </thead>
+    </div>
 
-      <tbody id="top20Table"></tbody>
-    </table>
+    <div class="grid">
 
-    <h2>Top 10 Portfolio</h2>
+      <div class="card">
+        <h3>Market Regime</h3>
+        <div class="metric" id="regimeText">FULL</div>
+        <div class="sub">Dynamic risk allocation engine</div>
+      </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Stock</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Investment</th>
-          <th>Momentum Score</th>
-        </tr>
-      </thead>
+      <div class="card">
+        <h3>Regime Score</h3>
+        <div class="metric" id="regimeScore">3</div>
+        <div class="sub">Based on 4 market filters</div>
+      </div>
 
-      <tbody id="portfolioTable"></tbody>
-    </table>
+      <div class="card">
+        <h3>Nifty PE</h3>
+        <div class="metric" id="niftyPE">20.6</div>
+        <div class="sub">Valuation filter</div>
+      </div>
+
+      <div class="card">
+        <h3>India VIX</h3>
+        <div class="metric" id="indiaVIX">18.4</div>
+        <div class="sub">Volatility indicator</div>
+      </div>
+
+    </div>
+
+    <div class="allocation-section">
+
+      <div class="card">
+
+        <h2 class="section-title">Asset Allocation</h2>
+
+        <canvas id="allocationChart"></canvas>
+
+        <div class="allocation-list">
+
+          <div class="allocation-item">
+            <div>
+              <strong>Stocks</strong>
+              <span id="stocksPercent">80%</span>
+            </div>
+            <div id="stocksCapital">₹4,00,000</div>
+          </div>
+
+          <div class="allocation-item">
+            <div>
+              <strong>Gold</strong>
+              <span id="goldPercent">20%</span>
+            </div>
+            <div id="goldCapital">₹1,00,000</div>
+          </div>
+
+          <div class="allocation-item">
+            <div>
+              <strong>Debt</strong>
+              <span id="debtPercent">0%</span>
+            </div>
+            <div id="debtCapital">₹0</div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <h2 class="section-title">Market Regime Details</h2>
+
+        <div class="regime-grid">
+
+          <div class="regime-box">
+            <h4>Supertrend</h4>
+            <p id="supertrendStatus">FALSE</p>
+          </div>
+
+          <div class="regime-box">
+            <h4>Supertrend Value</h4>
+            <p id="supertrendValue">24868</p>
+          </div>
+
+          <div class="regime-box">
+            <h4>Nifty Close</h4>
+            <p id="niftyClose">23643</p>
+          </div>
+
+          <div class="regime-box">
+            <h4>4W VIX Change</h4>
+            <p id="vixChange">7%</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-bottom: 28px;">
+
+      <h2 class="section-title">Top 20 Momentum Stocks</h2>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Symbol</th>
+            <th>12M</th>
+            <th>6M</th>
+            <th>3M</th>
+            <th>Momentum Score</th>
+          </tr>
+        </thead>
+
+        <tbody id="top20Table">
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div class="card">
+
+      <h2 class="section-title">Recommended Portfolio</h2>
+
+      <div id="portfolioGrid" class="portfolio-grid">
+      </div>
+
+    </div>
+
+    <div class="footer">
+      Powered by GitHub Actions • Momentum Engine • Regime Allocation System
+    </div>
 
   </div>
 
-  <script src="script.js"></script>
+  <script>
+
+    async function loadData() {
+
+      const response = await fetch('./data/output.json');
+
+      const data = await response.json();
+
+      // ======================================
+      // HEADER
+      // ======================================
+
+      document.getElementById('updatedTime').innerText =
+        `Last Updated: ${data.lastUpdated}`;
+
+      document.getElementById('regimeText').innerText =
+        data.regime.regime;
+
+      document.getElementById('regimeScore').innerText =
+        data.regime.score;
+
+      document.getElementById('niftyPE').innerText =
+        data.regime.marketData.niftyPE;
+
+      document.getElementById('indiaVIX').innerText =
+        data.regime.marketData.indiaVIX.toFixed(2);
+
+      // ======================================
+      // BADGE
+      // ======================================
+
+      const badge = document.getElementById('regimeBadge');
+
+      badge.innerText = `${data.regime.regime} REGIME`;
+
+      if(data.regime.regime === 'FULL') {
+        badge.className = 'badge full';
+      }
+      else {
+        badge.className = 'badge half';
+      }
+
+      // ======================================
+      // ASSET ALLOCATION
+      // ======================================
+
+      document.getElementById('stocksPercent').innerText =
+        `${data.assetAllocation.stocks.percentage}%`;
+
+      document.getElementById('goldPercent').innerText =
+        `${data.assetAllocation.gold.percentage}%`;
+
+      document.getElementById('debtPercent').innerText =
+        `${data.assetAllocation.debt.percentage}%`;
+
+      document.getElementById('stocksCapital').innerText =
+        `₹${data.assetAllocation.stocks.capital.toLocaleString()}`;
+
+      document.getElementById('goldCapital').innerText =
+        `₹${data.assetAllocation.gold.capital.toLocaleString()}`;
+
+      document.getElementById('debtCapital').innerText =
+        `₹${data.assetAllocation.debt.capital.toLocaleString()}`;
+
+      // ======================================
+      // REGIME DETAILS
+      // ======================================
+
+      document.getElementById('supertrendStatus').innerText =
+        data.regime.factors.supertrend ? 'TRUE' : 'FALSE';
+
+      document.getElementById('supertrendValue').innerText =
+        data.regime.marketData.supertrend.toFixed(2);
+
+      document.getElementById('niftyClose').innerText =
+        data.regime.marketData.niftyClose.toFixed(2);
+
+      document.getElementById('vixChange').innerText =
+        `${data.regime.marketData.vixChange4Week.toFixed(2)}%`;
+
+      // ======================================
+      // TOP 20 TABLE
+      // ======================================
+
+      const table = document.getElementById('top20Table');
+
+      data.top20.forEach(stock => {
+
+        table.innerHTML += `
+
+          <tr>
+            <td class="rank">${stock.Rank}</td>
+            <td><strong>${stock.Symbol}</strong></td>
+            <td>${stock['12M']}%</td>
+            <td>${stock['6M']}%</td>
+            <td>${stock['3M']}%</td>
+            <td class="score">${stock.MomentumScore}</td>
+          </tr>
+
+        `;
+
+      });
+
+      // ======================================
+      // PORTFOLIO
+      // ======================================
+
+      const portfolioGrid = document.getElementById('portfolioGrid');
+
+      data.portfolio.forEach(stock => {
+
+        portfolioGrid.innerHTML += `
+
+          <div class="portfolio-item">
+            <h4>${stock.symbol}</h4>
+            <p><strong>Price:</strong> ₹${stock.price}</p>
+            <p><strong>Quantity:</strong> ${stock.quantity}</p>
+            <p><strong>Invested:</strong> ₹${stock.investedAmount.toLocaleString()}</p>
+            <p><strong>Momentum:</strong> ${stock.momentumScore}</p>
+          </div>
+
+        `;
+
+      });
+
+      // ======================================
+      // PIE CHART
+      // ======================================
+
+      new Chart(
+        document.getElementById('allocationChart'),
+        {
+          type: 'doughnut',
+          data: {
+            labels: ['Stocks', 'Gold', 'Debt'],
+            datasets: [{
+              data: [
+                data.assetAllocation.stocks.percentage,
+                data.assetAllocation.gold.percentage,
+                data.assetAllocation.debt.percentage
+              ]
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }
+        }
+      );
+
+    }
+
+    loadData();
+
+  </script>
 
 </body>
 </html>
