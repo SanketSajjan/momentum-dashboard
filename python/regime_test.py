@@ -1,5 +1,3 @@
-import pandas_ta as ta
-from bs4 import BeautifulSoup
 
 # ============================================
 # 🔹 REGIME ENGINE TEST
