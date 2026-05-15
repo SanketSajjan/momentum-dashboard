@@ -148,12 +148,12 @@ else:
 # ============================================
 
 r3 = (
-    price.pct_change(62).iloc[-1]
+    price.pct_change(63).iloc[-1]
     * 100
 )
 
 r6 = (
-    price.pct_change(123).iloc[-1]
+    price.pct_change(126).iloc[-1]
     * 100
 )
 
