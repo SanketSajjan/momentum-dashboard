@@ -1,5 +1,5 @@
 {
-    "lastUpdated": "2026-05-15 13:19:05",
+    "lastUpdated": "2026-05-15 13:55:05",
     "regime": {
         "score": 3,
         "regime": "FULL",
@@ -23,20 +23,20 @@
         "LAURUSLABS",
         "POWERINDIA",
         "ADANIPOWER",
-        "BHEL",
-        "CUMMINSIND",
         "BSE",
+        "CUMMINSIND",
+        "BHEL",
         "IDEA",
-        "SAIL",
         "FORCEMOT",
-        "NAM-INDIA",
-        "HINDALCO",
         "GLENMARK",
+        "SAIL",
+        "NAM-INDIA",
         "BHARATFORG",
-        "ABCAPITAL",
+        "HINDALCO",
         "ADANIGREEN",
-        "HINDZINC",
+        "ABCAPITAL",
         "ADANIENSOL",
+        "HINDZINC",
         "POLYCAB"
     ],
     "assetAllocation": {
@@ -65,161 +65,161 @@
             "Rank": 1,
             "Symbol": "MCX",
             "12M": 180.78,
-            "6M": 75.4,
-            "3M": 42.91,
-            "MomentumScore": 121.59
+            "6M": 78.57,
+            "3M": 37.25,
+            "MomentumScore": 121.41
         },
         {
             "Rank": 2,
             "Symbol": "NATIONALUM",
             "12M": 149.68,
-            "6M": 56.41,
-            "3M": 10.31,
-            "MomentumScore": 93.82
+            "6M": 56.93,
+            "3M": 10.03,
+            "MomentumScore": 93.92
         },
         {
             "Rank": 3,
             "Symbol": "LAURUSLABS",
             "12M": 123.44,
-            "6M": 32.62,
-            "3M": 30.71,
-            "MomentumScore": 77.65
+            "6M": 34.41,
+            "3M": 37.11,
+            "MomentumScore": 79.47
         },
         {
             "Rank": 4,
             "Symbol": "POWERINDIA",
             "12M": 105.15,
-            "6M": 51.57,
-            "3M": 43.13,
-            "MomentumScore": 76.67
+            "6M": 48.87,
+            "3M": 44.88,
+            "MomentumScore": 76.21
         },
         {
             "Rank": 5,
             "Symbol": "ADANIPOWER",
             "12M": 102.48,
-            "6M": 43.8,
-            "3M": 46.66,
-            "MomentumScore": 73.71
+            "6M": 46.41,
+            "3M": 48.49,
+            "MomentumScore": 74.86
         },
         {
             "Rank": 6,
-            "Symbol": "BHEL",
-            "12M": 71.34,
-            "6M": 41.44,
-            "3M": 52.81,
-            "MomentumScore": 58.66
+            "Symbol": "BSE",
+            "12M": 73.1,
+            "6M": 51.3,
+            "3M": 26.03,
+            "MomentumScore": 57.14
         },
         {
             "Rank": 7,
             "Symbol": "CUMMINSIND",
             "12M": 90.98,
-            "6M": 26.46,
-            "3M": 23.58,
-            "MomentumScore": 58.14
+            "6M": 22.71,
+            "3M": 22.59,
+            "MomentumScore": 56.82
         },
         {
             "Rank": 8,
-            "Symbol": "BSE",
-            "12M": 73.1,
-            "6M": 41.48,
-            "3M": 25.92,
-            "MomentumScore": 54.18
+            "Symbol": "BHEL",
+            "12M": 71.34,
+            "6M": 39.36,
+            "3M": 44.26,
+            "MomentumScore": 56.33
         },
         {
             "Rank": 9,
             "Symbol": "IDEA",
             "12M": 83.17,
-            "6M": 18.37,
-            "3M": 9.28,
-            "MomentumScore": 48.95
+            "6M": 26.46,
+            "3M": 12.8,
+            "MomentumScore": 52.08
         },
         {
             "Rank": 10,
-            "Symbol": "SAIL",
-            "12M": 64.76,
-            "6M": 35.5,
-            "3M": 18.68,
-            "MomentumScore": 46.77
+            "Symbol": "FORCEMOT",
+            "12M": 89.64,
+            "6M": 15.96,
+            "3M": -13.83,
+            "MomentumScore": 46.84
         },
         {
             "Rank": 11,
-            "Symbol": "FORCEMOT",
-            "12M": 89.64,
-            "6M": 15.33,
-            "3M": -18.34,
-            "MomentumScore": 45.75
+            "Symbol": "GLENMARK",
+            "12M": 68.75,
+            "6M": 27.99,
+            "3M": 18.79,
+            "MomentumScore": 46.53
         },
         {
             "Rank": 12,
-            "Symbol": "NAM-INDIA",
-            "12M": 67.48,
-            "6M": 27.49,
-            "3M": 15.82,
-            "MomentumScore": 45.15
+            "Symbol": "SAIL",
+            "12M": 64.76,
+            "6M": 33.24,
+            "3M": 19.51,
+            "MomentumScore": 46.25
         },
         {
             "Rank": 13,
-            "Symbol": "HINDALCO",
-            "12M": 64.94,
-            "6M": 32.83,
-            "3M": 10.51,
-            "MomentumScore": 44.42
+            "Symbol": "NAM-INDIA",
+            "12M": 67.48,
+            "6M": 26.42,
+            "3M": 20.83,
+            "MomentumScore": 45.83
         },
         {
             "Rank": 14,
-            "Symbol": "GLENMARK",
-            "12M": 68.75,
-            "6M": 22.7,
-            "3M": 15.42,
-            "MomentumScore": 44.27
+            "Symbol": "BHARATFORG",
+            "12M": 60.46,
+            "6M": 36.6,
+            "3M": 18.67,
+            "MomentumScore": 44.94
         },
         {
             "Rank": 15,
-            "Symbol": "BHARATFORG",
-            "12M": 60.46,
-            "6M": 37.13,
-            "3M": 14.25,
-            "MomentumScore": 44.22
+            "Symbol": "HINDALCO",
+            "12M": 64.94,
+            "6M": 34.49,
+            "3M": 10.18,
+            "MomentumScore": 44.85
         },
         {
             "Rank": 16,
-            "Symbol": "ABCAPITAL",
-            "12M": 73.76,
-            "6M": 7.77,
-            "3M": 3.75,
-            "MomentumScore": 39.96
+            "Symbol": "ADANIGREEN",
+            "12M": 46.62,
+            "6M": 32.06,
+            "3M": 40.96,
+            "MomentumScore": 41.12
         },
         {
             "Rank": 17,
-            "Symbol": "ADANIGREEN",
-            "12M": 46.62,
-            "6M": 29.02,
-            "3M": 38.63,
-            "MomentumScore": 39.74
+            "Symbol": "ABCAPITAL",
+            "12M": 73.76,
+            "6M": 8.44,
+            "3M": 0.96,
+            "MomentumScore": 39.61
         },
         {
             "Rank": 18,
-            "Symbol": "HINDZINC",
-            "12M": 52.29,
-            "6M": 33.34,
-            "3M": 3.33,
-            "MomentumScore": 36.81
+            "Symbol": "ADANIENSOL",
+            "12M": 45.77,
+            "6M": 31.77,
+            "3M": 28.21,
+            "MomentumScore": 38.06
         },
         {
             "Rank": 19,
-            "Symbol": "ADANIENSOL",
-            "12M": 45.77,
-            "6M": 27.32,
-            "3M": 26.1,
-            "MomentumScore": 36.3
+            "Symbol": "HINDZINC",
+            "12M": 52.29,
+            "6M": 33.22,
+            "3M": 5.14,
+            "MomentumScore": 37.14
         },
         {
             "Rank": 20,
             "Symbol": "POLYCAB",
             "12M": 53.59,
-            "6M": 19.92,
-            "3M": 17.13,
-            "MomentumScore": 36.2
+            "6M": 19.49,
+            "3M": 18.21,
+            "MomentumScore": 36.28
         }
     ],
     "portfolio": [
@@ -228,70 +228,70 @@
             "price": 3391.0,
             "quantity": 11,
             "investedAmount": 37301.0,
-            "momentumScore": 121.59
+            "momentumScore": 121.41
         },
         {
             "symbol": "NATIONALUM",
             "price": 403.6,
             "quantity": 99,
             "investedAmount": 39956.4,
-            "momentumScore": 93.82
+            "momentumScore": 93.92
         },
         {
             "symbol": "LAURUSLABS",
             "price": 1323.6,
             "quantity": 30,
             "investedAmount": 39708.0,
-            "momentumScore": 77.65
+            "momentumScore": 79.47
         },
         {
             "symbol": "POWERINDIA",
             "price": 32535.0,
             "quantity": 1,
             "investedAmount": 32535.0,
-            "momentumScore": 76.67
+            "momentumScore": 76.21
         },
         {
             "symbol": "ADANIPOWER",
             "price": 221.33,
             "quantity": 180,
             "investedAmount": 39839.4,
-            "momentumScore": 73.71
-        },
-        {
-            "symbol": "BHEL",
-            "price": 398.3,
-            "quantity": 100,
-            "investedAmount": 39830.0,
-            "momentumScore": 58.66
-        },
-        {
-            "symbol": "CUMMINSIND",
-            "price": 5392.0,
-            "quantity": 7,
-            "investedAmount": 37744.0,
-            "momentumScore": 58.14
+            "momentumScore": 74.86
         },
         {
             "symbol": "BSE",
             "price": 4000.6,
             "quantity": 9,
             "investedAmount": 36005.4,
-            "momentumScore": 54.18
+            "momentumScore": 57.14
+        },
+        {
+            "symbol": "CUMMINSIND",
+            "price": 5392.0,
+            "quantity": 7,
+            "investedAmount": 37744.0,
+            "momentumScore": 56.82
+        },
+        {
+            "symbol": "BHEL",
+            "price": 398.3,
+            "quantity": 100,
+            "investedAmount": 39830.0,
+            "momentumScore": 56.33
         },
         {
             "symbol": "IDEA",
             "price": 12.95,
             "quantity": 3088,
             "investedAmount": 39989.6,
-            "momentumScore": 48.95
+            "momentumScore": 52.08
         },
         {
-            "symbol": "SAIL",
-            "price": 192.4,
-            "quantity": 207,
-            "investedAmount": 39826.8,
-            "momentumScore": 46.77
+            "symbol": "FORCEMOT",
+            "price": 20356.0,
+            "quantity": 1,
+            "investedAmount": 20356.0,
+            "momentumScore": 46.84
         }
     ],
     "capital": 500000
