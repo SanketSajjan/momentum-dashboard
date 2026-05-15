@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import yfinance as yf
 from bs4 import BeautifulSoup
+from supertrend import calculate_supertrend
 
 # ============================================
 # 🔹 REGIME ENGINE TEST
@@ -13,7 +14,52 @@ print("========== REGIME TEST ==========")
 # TEMPORARY F1
 # --------------------------------------------
 
-f1 = True
+# --------------------------------------------
+# NIFTY WEEKLY SUPERTREND
+# --------------------------------------------
+
+nifty = yf.download(
+    "^NSEI",
+    period="3y",
+    interval="1wk",
+    progress=False,
+    auto_adjust=True
+)
+
+# Handle multi-index safely
+if isinstance(
+    nifty.columns,
+    pd.MultiIndex
+):
+    nifty.columns = (
+        nifty.columns.get_level_values(0)
+    )
+
+supertrend = calculate_supertrend(
+    nifty,
+    period=10,
+    multiplier=3
+)
+
+latest_close = float(
+    nifty["Close"].iloc[-1]
+)
+
+latest_supertrend = float(
+    supertrend.dropna().iloc[-1]
+)
+
+f1 = (
+    latest_close
+    > latest_supertrend
+)
+
+print(f"Latest Close : {latest_close}")
+
+print(
+    f"Latest Supertrend : "
+    f"{latest_supertrend}"
+)
 
 print(f"F1 Supertrend : {f1}")
 
