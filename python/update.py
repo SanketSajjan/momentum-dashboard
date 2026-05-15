@@ -327,10 +327,15 @@ gold_data = yf.download(
     auto_adjust=True
 )
 
+gold_close = gold_data["Close"]
+if isinstance(
+    gold_close,
+    pd.DataFrame
+):
+    gold_close = gold_close.iloc[:, 0]
+
 gold_price = float(
-    gold_data["Close"]
-    .dropna()
-    .iloc[-1]
+    gold_close.dropna().iloc[-1]
 )
 
 gold_qty = int(
@@ -375,11 +380,18 @@ if req_debt > 0:
         auto_adjust=True
     )
 
+    debt_close = debt_data["Close"]
+
+    if isinstance(
+        debt_close,
+        pd.DataFrame
+    ):
+        debt_close = debt_close.iloc[:, 0]
+
     debt_price = float(
-        debt_data["Close"]
-        .dropna()
-        .iloc[-1]
+        debt_close.dropna().iloc[-1]
     )
+
 
     debt_qty = int(
         debt_capital
