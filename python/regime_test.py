@@ -229,3 +229,50 @@ else:
     regime = "HALF"
 
 print(f"REGIME : {regime}")
+
+
+import json
+
+regime_data = {
+
+    "score": score,
+
+    "regime": regime,
+
+    "factors": {
+
+        "supertrend": f1,
+
+        "peFilter": f2,
+
+        "vixBelow25": f3,
+
+        "vixSpikeSafe": f4
+    },
+
+    "marketData": {
+
+        "niftyClose": latest_close,
+
+        "supertrend": latest_supertrend,
+
+        "niftyPE": nifty_pe,
+
+        "indiaVIX": current_vix,
+
+        "vixChange4Week": vix_change
+    }
+}
+
+with open(
+    "data/regime_test.json",
+    "w"
+) as f:
+
+    json.dump(
+        regime_data,
+        f,
+        indent=4
+    )
+
+print("regime_test.json saved")
