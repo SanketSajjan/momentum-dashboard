@@ -3,16 +3,13 @@ import pandas as pd
 import yfinance as yf
 from bs4 import BeautifulSoup
 from supertrend import calculate_supertrend
+import pandas_ta as ta
 
 # ============================================
 # 🔹 REGIME ENGINE TEST
 # ============================================
 
 print("========== REGIME TEST ==========")
-
-# --------------------------------------------
-# TEMPORARY F1
-# --------------------------------------------
 
 # --------------------------------------------
 # NIFTY WEEKLY SUPERTREND
@@ -35,24 +32,25 @@ if isinstance(
         nifty.columns.get_level_values(0)
     )
 
-supertrend = calculate_supertrend(
-    nifty,
-    period=10,
+supertrend = ta.supertrend(
+    high=nifty["High"],
+    low=nifty["Low"],
+    close=nifty["Close"],
+    length=10,
     multiplier=3
+)
+
+st_col = supertrend.columns[0]
+
+latest_supertrend = float(
+    supertrend[st_col].iloc[-1]
 )
 
 latest_close = float(
     nifty["Close"].iloc[-1]
 )
 
-latest_supertrend = float(
-    supertrend.dropna().iloc[-1]
-)
-
-f1 = (
-    latest_close
-    > latest_supertrend
-)
+f1 = latest_close > latest_supertrend
 
 print(f"Latest Close : {latest_close}")
 
